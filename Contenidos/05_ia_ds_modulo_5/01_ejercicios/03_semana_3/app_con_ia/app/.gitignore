@@ -1,0 +1,4 @@
+# Archivos de configuración con claves
+.env
+.env.local
+.env.production
