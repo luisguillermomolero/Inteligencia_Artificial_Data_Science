@@ -1,6 +1,5 @@
 import io
-import base64
-from typing import List, Dict, Any, Optional
+from typing import Dict, Any
 from PIL import Image
 import torch
 import torchvision.transforms as T
@@ -20,18 +19,13 @@ class VisionModel:
                 raise FileNotFoundError
         except Exception:
             # Load torchvision model as fallback
-            self.cls_model = models.resnet18(weights=models.ResNet18_Weights.DEFAULT)
+            weights = models.ResNet18_Weights.DEFAULT
+            self.cls_model = models.resnet18(weights=weights)
+            # Save categories for human-readable names
+            self.imagenet_categories = weights.meta.get('categories', [])
             self.using_torchscript = False
 
         self.cls_model.eval().to(self.device)
-        # Detection model (Faster R-CNN)
-        try:
-            self.det_model = models.detection.fasterrcnn_resnet50_fpn(weights=models.detection.FasterRCNN_ResNet50_FPN_Weights.DEFAULT)
-        except Exception:
-            # fallback if weights API differs
-            self.det_model = models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
-        self.det_model.eval().to(self.device)
-
         self.preprocess = T.Compose([
             T.Resize(256),
             T.CenterCrop(224),
@@ -47,13 +41,6 @@ class VisionModel:
         image = self._image_from_bytes(data)
         return self.predict_image(image)
 
-    def predict_base64(self, b64: str) -> Dict[str, Any]:
-        # allow data URI prefix
-        if b64.startswith('data:'):
-            b64 = b64.split(',', 1)[1]
-        data = base64.b64decode(b64)
-        return self.predict_bytes(data)
-
     def predict_image(self, image: Image.Image) -> Dict[str, Any]:
         x = self.preprocess(image).unsqueeze(0).to(self.device)
         with torch.no_grad():
@@ -66,15 +53,10 @@ class VisionModel:
             else:
                 probs = torch.nn.functional.softmax(logits, dim=0)
             top_prob, top_idx = torch.max(probs, 0)
-        return {'class_id': int(top_idx.item()), 'score': float(top_prob.item())}
-
-    def detect_bytes(self, data: bytes, threshold: float = 0.5) -> List[Dict[str, Any]]:
-        image = self._image_from_bytes(data)
-        tensor = T.ToTensor()(image).to(self.device)
-        with torch.no_grad():
-            preds = self.det_model([tensor])[0]
-        results = []
-        for box, label, score in zip(preds['boxes'], preds['labels'], preds['scores']):
-            if float(score) >= threshold:
-                results.append({'box': [float(x) for x in box.tolist()], 'label': int(label.item()), 'score': float(score.item())})
-        return results
+        class_id = int(top_idx.item())
+        class_name = None
+        # Provide human-readable class name if available
+        if hasattr(self, 'imagenet_categories') and self.imagenet_categories:
+            if 0 <= class_id < len(self.imagenet_categories):
+                class_name = self.imagenet_categories[class_id]
+        return {'class_id': class_id, 'class_name': class_name, 'score': float(top_prob.item())}
