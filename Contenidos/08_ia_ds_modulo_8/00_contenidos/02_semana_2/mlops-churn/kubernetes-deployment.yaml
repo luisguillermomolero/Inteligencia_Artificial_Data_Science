@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: churn-api-deployment
+spec:
+  replicas: 2  # dos réplicas para alta disponibilidad
+  selector:
+    matchLabels:
+      app: churn-api
+  template:
+    metadata:
+      labels:
+        app: churn-api
+    spec:
+      containers:
+      - name: churn-api-container
+        # IMPORTANTE: Actualiza esta línea con tu imagen de Docker Hub
+        # Opción 1: Si usas Docker Hub, reemplaza 'tuusuario' con tu usuario:
+        # image: tuusuario/churn-mlops-api:latest
+        # Opción 2: Si usas imagen local (solo Docker Desktop), usa:
+        image: luisguillermomolero/churn-mlops-api:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /docs
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /docs
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 5
