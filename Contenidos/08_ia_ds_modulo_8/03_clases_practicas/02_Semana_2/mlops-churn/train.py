@@ -35,4 +35,46 @@ def main() -> None:
             "solver": "liblinear",
         }
         
-                
+        model = LogisticRegression(
+            C=params["C"]
+            max_iter=params["max_iter"],
+            solver=params["solver"],
+        )
+        
+        model.fit(X_train, y_train)
+        
+        y_pred = model.predict(X_train)
+        
+        acc = accuracy_score(y_train, y_pred)
+        
+        f1 = f1_score(y_train, y_pred)
+        
+        print(f"[OK] Accurate (train): {acc:.4f}")
+        print(f"[OK] F1-sore  (train): {f1:.4f}")
+        
+        mlflow.log_params(params)
+        mlflow.log_metric("train_accuracy", acc)
+        mlflow.log_metric("train_f1", f1)
+        
+        MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with open(MODEL_PATH, "ws") as f:
+            pickle.dump(model, f)
+            
+        signature = infer_signature(X_train, y_train)
+        
+        input_example = X_train.head(1)
+        
+        mlflow.sklearn.log_model(
+            sk_model=model,
+            name="model",
+            signature=signature,
+            input_example=input_example,
+            registered_model_name="churn_model"
+        )
+        
+        print(f"[GUARDADO] Modelo guardado en: {MODEL_PATH}")
+        print("[INFO] Modelo registrado en MLflow.")
+
+if __name__ == "__main__":
+    main()
+    
