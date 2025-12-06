@@ -7,7 +7,7 @@ import mlflow.sklearn
 from mlflow.models import infer_signature
 import pickle
 
-mlflow.set_tracking_uri("sqlite://mlflow.db")
+mlflow.set_tracking_uri("file:./mlruns")
 
 TRAIN_PATH = Path("data/train.csv")
 MODEL_PATH = Path("models/model.pkl")
@@ -15,8 +15,9 @@ FEATURE_COLS = [
     "age",
     "tenure",
     "monthly_fee",
+    "num_products",
     "has_partner",
-    "has-dependents",
+    "has_dependents",
 ]
 
 TARGET_COL = "churn"
@@ -36,7 +37,7 @@ def main() -> None:
         }
         
         model = LogisticRegression(
-            C=params["C"]
+            C=params["C"],
             max_iter=params["max_iter"],
             solver=params["solver"],
         )
@@ -57,7 +58,7 @@ def main() -> None:
         mlflow.log_metric("train_f1", f1)
         
         MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
-        with open(MODEL_PATH, "ws") as f:
+        with open(MODEL_PATH, "wb") as f:
             pickle.dump(model, f)
             
         signature = infer_signature(X_train, y_train)

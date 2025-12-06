@@ -4,7 +4,7 @@ from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
 import pickle
 import mlflow
 
-mlflow.set_tracking_uri("sqlite://mlflow.db")
+mlflow.set_tracking_uri("file:./mlruns")
 
 TEST_PATH = Path("data/test.csv")
 
@@ -12,7 +12,7 @@ MODEL_PATH = Path("models/model.pkl")
 
 FEATURES_COLS = [
     "age",
-    "ternure",
+    "tenure",
     "monthly_fee",
     "num_products",
     "has_partner",

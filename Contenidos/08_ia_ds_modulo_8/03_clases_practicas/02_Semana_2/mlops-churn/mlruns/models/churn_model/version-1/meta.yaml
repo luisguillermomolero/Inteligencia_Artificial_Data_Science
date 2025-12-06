@@ -1,0 +1,15 @@
+creation_timestamp: 1764984111247
+current_stage: None
+deployment_job_state: null
+description: null
+last_updated_timestamp: 1764984111247
+model_id: m-0729b3ea2d6d4bb99730292830111e28
+name: churn_model
+run_id: 255bc92bc2d44ab0b7c134140f405dca
+run_link: null
+source: models:/m-0729b3ea2d6d4bb99730292830111e28
+status: READY
+status_message: null
+storage_location: file:G:/Mi unidad/U_DEV_SENIOR/Inteligencia Artificial & Data Science/Contenidos/08_ia_ds_modulo_8/03_clases_practicas/02_Semana_2/mlops-churn/mlruns/593379918466235522/models/m-0729b3ea2d6d4bb99730292830111e28/artifacts
+user_id: null
+version: 1
