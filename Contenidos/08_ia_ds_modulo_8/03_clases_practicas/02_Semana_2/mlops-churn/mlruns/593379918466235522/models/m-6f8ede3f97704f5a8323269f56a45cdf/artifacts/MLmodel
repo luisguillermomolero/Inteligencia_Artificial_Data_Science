@@ -1,0 +1,37 @@
+artifact_path: file:G:/Mi unidad/U_DEV_SENIOR/Inteligencia Artificial & Data Science/Contenidos/08_ia_ds_modulo_8/03_clases_practicas/02_Semana_2/mlops-churn/mlruns/593379918466235522/models/m-6f8ede3f97704f5a8323269f56a45cdf/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.5
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.2
+is_signature_from_type_hint: false
+mlflow_version: 3.6.0
+model_id: m-6f8ede3f97704f5a8323269f56a45cdf
+model_size_bytes: 1549
+model_uuid: m-6f8ede3f97704f5a8323269f56a45cdf
+prompts: null
+run_id: 3c52dffb69de44b18d2958dbc7bc0974
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  serving_input_path: serving_input_example.json
+  type: dataframe
+signature:
+  inputs: '[{"type": "double", "name": "age", "required": true}, {"type": "double",
+    "name": "tenure", "required": true}, {"type": "double", "name": "monthly_fee",
+    "required": true}, {"type": "double", "name": "num_products", "required": true},
+    {"type": "double", "name": "has_partner", "required": true}, {"type": "double",
+    "name": "has_dependents", "required": true}]'
+  outputs: '[{"type": "long", "name": "churn", "required": true}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-12-06 01:30:22.036720'

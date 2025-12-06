@@ -1,0 +1,14 @@
+artifact_uri: file:G:/Mi unidad/U_DEV_SENIOR/Inteligencia Artificial & Data Science/Contenidos/08_ia_ds_modulo_8/03_clases_practicas/02_Semana_2/mlops-churn/mlruns/593379918466235522/05eb65c93f3c4dfaa5e4d6ea467cfa64/artifacts
+end_time: 1764987351402
+entry_point_name: ''
+experiment_id: '593379918466235522'
+lifecycle_stage: active
+run_id: 05eb65c93f3c4dfaa5e4d6ea467cfa64
+run_name: evaluation
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1764987350970
+status: 3
+tags: []
+user_id: luisg
