@@ -1,0 +1,10 @@
+artifact_location: file:G:/Mi unidad/U_DEV_SENIOR/Inteligencia Artificial & Data Science/Contenidos/08_ia_ds_modulo_8/03_clases_practicas/02_Semana_2/mlops-churn/mlruns/593379918466235522/models/m-ffbcc482b90c44b984a32b66b963d5f4/artifacts
+creation_timestamp: 1765757708463
+experiment_id: '593379918466235522'
+last_updated_timestamp: 1765757725597
+model_id: m-ffbcc482b90c44b984a32b66b963d5f4
+model_type: null
+name: model
+source_run_id: ed9b40d953684dda96e528df22010582
+status: 2
+status_message: null
