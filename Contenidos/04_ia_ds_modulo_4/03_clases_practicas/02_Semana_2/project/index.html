@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main>
+      <section aria-labelledby="titulo-modelo">
+        <h1 id="titulo-modelo">Sistema de apoyo diagnóstico</h1>
+
+        <form id="prediction-form">
+          <label for="temperatura">Temperatura corporal</label>
+          <input id="temperatura" type="number" step="0.1" required />
+          <label for="tos">Nivel de tos</label>
+          <select id="tos" required>
+            <option value="">Seleccione</option>
+            <option value="0">Ninguna</option>
+            <option value="1">Moderada</option>
+            <option value="2">Alta</option>
+          </select>
+
+          <button type="submit">Evaluar</button>
+        </form>
+
+        <output id="resultado" aria-live="polite"></output>
+      </section>
+    </main>
+  </body>
+</html>
